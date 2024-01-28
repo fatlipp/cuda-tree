@@ -1,0 +1,8 @@
+{
+    "type": "Quad",
+    "size": {"x": 100, "y": 100, "z": 100},
+
+    "threadsPerBlock": 1024,
+    "maxDepth": 6,
+    "minPointsToDivide": 300
+}

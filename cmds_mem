@@ -1,0 +1,2 @@
+compute-sanitizer --tool memcheck  ./cuda_tree_app ./assets/AppConfig.json
+compute-sanitizer --tool initcheck  ./cuda_physics ./assets/AppConfig.json
