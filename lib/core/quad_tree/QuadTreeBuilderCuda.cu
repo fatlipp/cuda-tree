@@ -18,13 +18,12 @@ QuadTreeBuilderCuda::QuadTreeBuilderCuda(const TreeConfig& config)
 
 void QuadTreeBuilderCuda::Initialize(const int capacity)
 {
-    cudaMallocManaged((void**)&pointsExch, capacity * sizeof(float2));
-    GET_CUDA_ERROR("cudaMallocManaged");
-    cudaDeviceSynchronize();
-    GET_CUDA_ERROR("cudaDeviceSynchronize");
+    cudaMalloc((void**)&pointsExch, capacity * sizeof(float2));
+    GET_CUDA_ERROR("cudaMalloc() pointsExch");
     // tree:
     const int maxNodes = config.GetNodesCount();
     cudaMallocManaged((void**)&tree, maxNodes * sizeof(QuadTree));
+    GET_CUDA_ERROR("cudaMallocManaged() tree");
     cudaDeviceSynchronize();
     GET_CUDA_ERROR("cudaDeviceSynchronize");
 }

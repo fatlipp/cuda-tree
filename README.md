@@ -11,6 +11,9 @@ Functionality
 * Random Points Generator
 * Configuration file
 
+Some implementation details:
+[Medium](https://medium.com/@fatlip/cuda-quadtree-octree-72e65216866c)
+
 ---
 
 #### Usage
@@ -35,7 +38,7 @@ Functionality
 #### Limitations
 * Tested on up to 150 mln points
 * Max *stable* depth: QuadTree = 7, Octree = 6
-* I recommend to disable rendering (`AppConfig.json`) if use more than 50 mln points
+* I recommend to disable rendering (`AppConfig.json`) if more than 50 mln points are used
 
 #### Further development
 1. CUDA based kNN, Radius Search

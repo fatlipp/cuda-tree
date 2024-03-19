@@ -63,7 +63,7 @@ __global__ void OctreeKernel(float3* points, float3* pointsExch,
     thisBlock.sync();
 
     for (int i = startId + thisWarp.thread_rank(); 
-             thisWarp.any(i < endId); // use any to prevent deadlock on a block sync
+             thisWarp.any(i < endId);
              i += thisWarp.size())
     {
         const auto isInRange = i < endId;
@@ -72,37 +72,37 @@ __global__ void OctreeKernel(float3* points, float3* pointsExch,
 
         // front
         const auto isUpLeft = isInRange && isFront && point.x <= center.x && point.y > center.y;
-        auto summ = __popc(thisWarp.ballot(isUpLeft));
-        pointsInCellLocal[0] += thisWarp.shfl(summ, 0);
+        // auto summ = __popc(thisWarp.ballot(isUpLeft));
+        pointsInCellLocal[0] += __popc(thisWarp.ballot(isUpLeft));//thisWarp.shfl(summ, 0);
 
         const auto isUpRight = isInRange && isFront && point.x > center.x && point.y > center.y;
-        summ = __popc(thisWarp.ballot(isUpRight));
-        pointsInCellLocal[1] += thisWarp.shfl(summ, 0);
+        // summ = __popc(thisWarp.ballot(isUpRight));
+        pointsInCellLocal[1] += __popc(thisWarp.ballot(isUpRight));//thisWarp.shfl(summ, 0);
 
         const auto isDownLeft = isInRange && isFront && point.x <= center.x && point.y <= center.y;
-        summ = __popc(thisWarp.ballot(isDownLeft));
-        pointsInCellLocal[2] += thisWarp.shfl(summ, 0);
+        // summ = __popc(thisWarp.ballot(isDownLeft));
+        pointsInCellLocal[2] += __popc(thisWarp.ballot(isDownLeft));//thisWarp.shfl(summ, 0);
 
         const auto isDownRight = isInRange && isFront && point.x > center.x && point.y <= center.y;
-        summ = __popc(thisWarp.ballot(isDownRight));
-        pointsInCellLocal[3] += thisWarp.shfl(summ, 0);
+        // summ = __popc(thisWarp.ballot(isDownRight));
+        pointsInCellLocal[3] += __popc(thisWarp.ballot(isDownRight));//thisWarp.shfl(summ, 0);
 
         // back
         const auto isUpLeftBack = isInRange && !isFront && point.x <= center.x && point.y > center.y;
-        summ = __popc(thisWarp.ballot(isUpLeftBack));
-        pointsInCellLocal[4] += thisWarp.shfl(summ, 0);
+        // summ = __popc(thisWarp.ballot(isUpLeftBack));
+        pointsInCellLocal[4] += __popc(thisWarp.ballot(isUpLeftBack));//thisWarp.shfl(summ, 0);
 
         const auto isUpRightBack = isInRange && !isFront && point.x > center.x && point.y > center.y;
-        summ = __popc(thisWarp.ballot(isUpRightBack));
-        pointsInCellLocal[5] += thisWarp.shfl(summ, 0);
+        // summ = __popc(thisWarp.ballot(isUpRightBack));
+        pointsInCellLocal[5] += __popc(thisWarp.ballot(isUpRightBack));//thisWarp.shfl(summ, 0);
 
         const auto isDownLeftBack = isInRange && !isFront && point.x <= center.x && point.y <= center.y;
-        summ = __popc(thisWarp.ballot(isDownLeftBack));
-        pointsInCellLocal[6] += thisWarp.shfl(summ, 0);
+        // summ = __popc(thisWarp.ballot(isDownLeftBack));
+        pointsInCellLocal[6] += __popc(thisWarp.ballot(isDownLeftBack));//thisWarp.shfl(summ, 0);
 
         const auto isDownRightBack = isInRange && !isFront && point.x > center.x && point.y <= center.y;
-        summ = __popc(thisWarp.ballot(isDownRightBack));
-        pointsInCellLocal[7] += thisWarp.shfl(summ, 0);
+        // summ = __popc(thisWarp.ballot(isDownRightBack));
+        pointsInCellLocal[7] += __popc(thisWarp.ballot(isDownRightBack));//thisWarp.shfl(summ, 0);
 
     }
     thisBlock.sync();

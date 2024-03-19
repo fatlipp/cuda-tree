@@ -59,29 +59,31 @@ __global__ void QuadTreeKernel(float2* points, float2* pointsExch,
 
     thisBlock.sync();
 
+
+    // each warp fills 4 subdivisions
     for (int i = startId + thisWarp.thread_rank(); 
              thisWarp.any(i < endId); // use any to prevent deadlock on a block sync
              i += thisWarp.size())
     {
         const auto isInRange = i < endId;
 
-        const auto point = isInRange ? pointsExch[i] : float2{-1, -1};
+        const auto point = isInRange ? pointsExch[i] : float2{};
 
         const auto isUpLeft = isInRange && point.x <= center.x && point.y > center.y;
-        auto summ = __popc(thisWarp.ballot(isUpLeft));
-        pointsInCellLocal[0] += thisWarp.shfl(summ, 0);
+        // auto summ = __popc(thisWarp.ballot(isUpLeft));
+        pointsInCellLocal[0] += __popc(thisWarp.ballot(isUpLeft));//thisWarp.shfl(summ, 0);
 
         const auto isUpRight = isInRange && point.x > center.x && point.y > center.y;
-        summ = __popc(thisWarp.ballot(isUpRight));
-        pointsInCellLocal[1] += thisWarp.shfl(summ, 0);
+        // summ = __popc(thisWarp.ballot(isUpRight));
+        pointsInCellLocal[1] += __popc(thisWarp.ballot(isUpRight));//thisWarp.shfl(summ, 0);
 
         const auto isDownLeft = isInRange && point.x <= center.x && point.y <= center.y;
-        summ = __popc(thisWarp.ballot(isDownLeft));
-        pointsInCellLocal[2] += thisWarp.shfl(summ, 0);
+        // summ = __popc(thisWarp.ballot(isDownLeft));
+        pointsInCellLocal[2] += __popc(thisWarp.ballot(isDownLeft));//thisWarp.shfl(summ, 0);
 
         const auto isDownRight = isInRange && point.x > center.x && point.y <= center.y;
-        summ = __popc(thisWarp.ballot(isDownRight));
-        pointsInCellLocal[3] += thisWarp.shfl(summ, 0);
+        // summ = __popc(thisWarp.ballot(isDownRight));
+        pointsInCellLocal[3] += __popc(thisWarp.ballot(isDownRight));//thisWarp.shfl(summ, 0);
 
     }
     thisBlock.sync();
@@ -96,6 +98,8 @@ __global__ void QuadTreeKernel(float2* points, float2* pointsExch,
     }
     thisBlock.sync();
 
+    // Store counts for each leaf in the latest index of a Shared Memory
+    // one need atleat 4 warp to perform this action (fill each subdivision, i.e. leaf)
     if (warpId < 4)
     {
         // warpId - a cell number
@@ -122,9 +126,7 @@ __global__ void QuadTreeKernel(float2* points, float2* pointsExch,
     }
     thisBlock.sync();
 
-    // ID = (warpId[0...N] * 4) + CELL_ID[tl, tr, bl, br]
-    // last warpID - last CELL OFFSET for the ID
-    // calc endIds
+    // Calc endIds
     if (warpId == 0)
     {
         int itemsInCell = pointsInCell[(warpsPerBlock - 1) * 4 + 0];
@@ -181,7 +183,7 @@ __global__ void QuadTreeKernel(float2* points, float2* pointsExch,
     thisBlock.sync();
 
     for (int i = startId + thisWarp.thread_rank(); 
-             thisWarp.any(i < endId); // use any to prevent deadlock on a block sync
+             thisWarp.any(i < endId);
              i += thisWarp.size())
     {
         const auto isInRange = i < endId;

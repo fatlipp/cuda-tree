@@ -21,13 +21,13 @@ void OctreeBuilderCuda::Initialize(const int capacity)
     std::cout << "Initialize()" << std::endl;
     auto satrtTime = std::chrono::high_resolution_clock::now();
     
-    cudaMallocManaged((void**)&pointsExch, capacity * sizeof(float3));
-    GET_CUDA_ERROR("cudaMallocManaged");
+    cudaMalloc((void**)&pointsExch, capacity * sizeof(float3));
+    GET_CUDA_ERROR("cudaMalloc() pointsExch");
     // tree:
     const int maxNodes = config.GetNodesCount();
     cudaMallocManaged((void**)&tree, maxNodes * sizeof(Octree));
     cudaDeviceSynchronize();
-    GET_CUDA_ERROR("cudaMallocManaged");
+    GET_CUDA_ERROR("cudaMallocManaged() tree");
 
     auto endTime = std::chrono::high_resolution_clock::now();
     std::cout << " duration: " << 
