@@ -35,7 +35,7 @@ Functionality
 #### Limitations
 * Tested on up to 150 mln points
 * Max *stable* depth: QuadTree = 7, Octree = 6
-* I recommend to rendering if use more than 50 mln points
+* I recommend to disable rendering (`AppConfig.json`) if use more than 50 mln points
 
 #### Further development
 1. CUDA based kNN, Radius Search
