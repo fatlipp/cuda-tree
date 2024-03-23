@@ -7,8 +7,9 @@
 class RPGEngineUniform
 {
 public:
-    RPGEngineUniform(const int3 dims)
-        : dims {dims}
+    RPGEngineUniform(const float3& origin, const float3& dims)
+        : origin {origin}
+        , dims {dims}
         , count {0}
     {
     }
@@ -37,12 +38,13 @@ public:
     }
 
 private:
-  const int3 dims;
+  const float3 origin;
+  const float3 dims;
   int count;
 };
-RandomPointsGenerator::RandomPointsGenerator(const int3 dims)
+RandomPointsGenerator::RandomPointsGenerator(const float3& origin, const float3& dims)
 {
-    rpg = new RPGEngineUniform(dims);
+    rpg = new RPGEngineUniform(origin, dims);
 }
 
 float2* RandomPointsGenerator::GenerateOnDevice(const int pointsCount)

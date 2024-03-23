@@ -21,11 +21,12 @@ enum class ButtonState
 class RenderCamera : public Render
 {
 public:
-    RenderCamera(const RenderConfig& config, const void* data, const bool is3d)
+    RenderCamera(const RenderConfig& config, const bool is3d)
         : Render(config)
-        , data {data}
         , is3d {is3d}
     {
+        speed = config.cameraSpeed;
+        mouseSpeed = config.mouseSpeed;
     }
 
     ~RenderCamera() override;
@@ -57,7 +58,6 @@ public:
     }
 
 private:
-    const void* data;
     const bool is3d;
 
     GLuint shaderProgram;
@@ -73,8 +73,8 @@ private:
     float horizontalAngle = 0.0f;
     float verticalAngle = 0.0f;
 
-    float speed = 2.0f;
-    float mouseSpeed = 0.001f;
+    float speed;
+    float mouseSpeed;
 
     glm::vec3 position = glm::vec3( 0, 0, -5 );
     glm::mat4 modelMatrix = glm::mat4(1.0);

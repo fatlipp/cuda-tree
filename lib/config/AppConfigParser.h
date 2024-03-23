@@ -9,11 +9,10 @@ namespace config
 {
 void SolveRelativePath(std::string& path, const std::string& parentPath)
 {
-    std::regex configNameRegex("\\./.+.json");
+    std::regex configNameRegex("\\./.+\\.json");
     std::smatch relativePathMatch;
 
-    if (std::regex_search(path, relativePathMatch, configNameRegex) &&
-        relativePathMatch.prefix().length() == 0)
+    if (path[0] == '.')
     {
         std::regex parentFolderRegex("[a-zA-Z0-9]+.json");
         std::smatch parentFolderMatch;
@@ -23,6 +22,18 @@ void SolveRelativePath(std::string& path, const std::string& parentPath)
             path = parentFolderMatch.prefix().str() + path.substr(2);
         }
     }
+
+    // if (std::regex_search(path, relativePathMatch, configNameRegex) &&
+    //     relativePathMatch.prefix().length() == 0)
+    // {
+    //     std::regex parentFolderRegex("[a-zA-Z0-9]+.json");
+    //     std::smatch parentFolderMatch;
+    //     if (std::regex_search(parentPath, parentFolderMatch, parentFolderRegex) &&
+    //         parentFolderMatch.prefix().length() > 0)
+    //     {
+    //         path = parentFolderMatch.prefix().str() + path.substr(2);
+    //     }
+    // }
 }
 
 AppConfig ParseAppConfig(const std::string& path)
@@ -36,10 +47,12 @@ AppConfig ParseAppConfig(const std::string& path)
     result.pointsCount = data["points_count"];
     result.treeConfigPath = data["tree_config"];
     result.renderConfigPath = data["render_config"];
+    result.modelPath = data["model_path"];
     result.enableRender = data["enable_render"];
 
     SolveRelativePath(result.treeConfigPath, path);
     SolveRelativePath(result.renderConfigPath, path);
+    SolveRelativePath(result.modelPath, path);
 
     return result;
 }

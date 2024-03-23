@@ -1,8 +1,9 @@
 {
-    "type": "Quad",
-    "size": {"x": 100, "y": 100, "z": 100},
+    "type": "Oct",
+    "origin": {"x": 0.0, "y": 0.0, "z": 0.0},
+    "size": {"x": 10.0, "y": 10.0, "z": 10.0},
 
     "threadsPerBlock": 1024,
     "maxDepth": 6,
-    "minPointsToDivide": 300
+    "minPointsToDivide": 1000
 }

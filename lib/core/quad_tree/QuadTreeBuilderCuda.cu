@@ -33,8 +33,9 @@ void QuadTreeBuilderCuda::Build(float2* points, const int size)
     Reset();
 
     tree->id = 0;
-    tree->bounds.min = {0.0f, 0.0f};
-    tree->bounds.max = {static_cast<float>(config.size.x), static_cast<float>(config.size.y)};
+    tree->bounds.min = {config.origin.x, config.origin.y};
+    const auto maxDim = config.origin + config.size;
+    tree->bounds.max = {maxDim.x, maxDim.y};
     tree->startId = 0;
     tree->endId = size;
 

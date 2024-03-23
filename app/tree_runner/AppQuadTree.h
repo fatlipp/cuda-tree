@@ -12,7 +12,7 @@ void RunAppQuadTree(const TreeConfig& treeConfig, const RenderConfig& renderConf
 {
     std::cout << "RunAppQuadTree()\n";
 
-    RandomPointsGenerator generator(treeConfig.size);
+    RandomPointsGenerator generator(treeConfig.origin, treeConfig.size);
     float2* points = generator.GenerateOnDevice(appConfig.pointsCount);
 
     auto treeBuilder = std::make_unique<QuadTreeBuilderCuda>(treeConfig);
@@ -48,7 +48,7 @@ void RunAppQuadTree(const TreeConfig& treeConfig, const RenderConfig& renderConf
     auto drawableTree = std::make_unique<DrawableTree<float2, 2>>(&tree, pointsHost, treeConfig, 
         renderConfig.pointSize, renderConfig.lineWidth);
 
-    RenderCamera render(renderConfig, pointsHost, false);
+    RenderCamera render(renderConfig, false);
     render.AddDrawable(drawableTree.get());
 
     ScreenClick2d clicker(render, tree.bounds.min, tree.bounds.max);
@@ -64,7 +64,7 @@ void RunAppQuadTree(const TreeConfig& treeConfig, const RenderConfig& renderConf
                     result = NearestNeighbours<float2, 2>(&tree, treeConfig, outPos, 5, pointsHost);
                     break;
                 case 2:
-                    result = RadiusSearch<float2, 2>(&tree, treeConfig, outPos, 15, pointsHost);
+                    result = RadiusSearch<float2, 2>(&tree, treeConfig, outPos, 1.25f, pointsHost);
                     break;
                 
                 default:

@@ -8,4 +8,7 @@ struct RenderConfig : public BaseConfig
     int height;
     int pointSize;
     int lineWidth;
+
+    float cameraSpeed;
+    float mouseSpeed;
 };

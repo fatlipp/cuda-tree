@@ -8,7 +8,8 @@
 struct TreeConfig : public BaseConfig
 {
     TreeType type;
-    int3 size;
+    float3 origin;
+    float3 size;
     int maxDepth;
     
     int threadsPerBlock;

@@ -25,6 +25,9 @@ TreeConfig ParseTreeConfig(const std::string& path)
     result.maxDepth = data["maxDepth"];
     result.minPointsToDivide = data["minPointsToDivide"];
         
+    result.origin.x = data["origin"]["x"];
+    result.origin.y = data["origin"]["y"];
+    result.origin.z = data["origin"]["z"];
     result.size.x = data["size"]["x"];
     result.size.y = data["size"]["y"];
     result.size.z = data["size"]["z"];

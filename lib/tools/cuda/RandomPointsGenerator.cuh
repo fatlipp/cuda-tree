@@ -7,7 +7,7 @@ class RPGEngineUniform;
 class RandomPointsGenerator
 {
   public:
-    RandomPointsGenerator(const int3 dims);
+    RandomPointsGenerator(const float3& origin, const float3& dims);
 
   public:
     float2* GenerateOnDevice(const int pointsCount);

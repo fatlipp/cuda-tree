@@ -18,6 +18,8 @@ RenderConfig ParseRenderConfig(const std::string& path)
     result.height = data["height"];
     result.pointSize = data["point_size"];
     result.lineWidth = data["line_width"];
+    result.cameraSpeed = data["camera_speed"];
+    result.mouseSpeed = data["mouse_speed"];
 
     return result;
 }

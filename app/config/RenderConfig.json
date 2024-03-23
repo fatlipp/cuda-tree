@@ -2,5 +2,8 @@
     "width": 2500,
     "height": 2500,
     "point_size": 15,
-    "line_width": 5
+    "line_width": 5,
+
+    "camera_speed": 1.0,
+    "mouse_speed": 0.001
 }

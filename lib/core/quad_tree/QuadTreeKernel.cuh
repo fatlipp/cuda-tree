@@ -62,7 +62,7 @@ __global__ void QuadTreeKernel(float2* points, float2* pointsExch,
 
     // each warp fills 4 subdivisions
     for (int i = startId + thisWarp.thread_rank(); 
-             thisWarp.any(i < endId); // use any to prevent deadlock on a block sync
+             thisWarp.any(i < endId);
              i += thisWarp.size())
     {
         const auto isInRange = i < endId;

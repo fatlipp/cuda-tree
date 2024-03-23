@@ -10,7 +10,7 @@ void RunAppOctree(const TreeConfig& treeConfig, const RenderConfig& renderConfig
 {
     std::cout << "RunAppOctree()\n";
     
-    RandomPointsGenerator3d generator(treeConfig.size);
+    RandomPointsGenerator3d generator(treeConfig.origin, treeConfig.size);
     float3* points = generator.GenerateOnDevice(appConfig.pointsCount);
 
     auto treeBuilder = std::make_unique<OctreeBuilderCuda>(treeConfig);
@@ -38,7 +38,7 @@ void RunAppOctree(const TreeConfig& treeConfig, const RenderConfig& renderConfig
         return;
     }
 
-    RenderCamera render(renderConfig, pointsHost, true);
+    RenderCamera render(renderConfig, true);
 
     auto drawableTree = std::make_unique<DrawableTree<float3, 3>>(&tree, pointsHost, treeConfig, 
         renderConfig.pointSize, renderConfig.lineWidth);

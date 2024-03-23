@@ -1,7 +1,8 @@
 {
-    "points_count": 100000,
+    "points_count": 1000000,
     "enable_render": true,
 
     "tree_config": "./TreeConfig.json",
-    "render_config": "./RenderConfig.json"
+    "render_config": "./RenderConfig.json",
+    "model_path": "./../models/Skeleton.obj"
 }

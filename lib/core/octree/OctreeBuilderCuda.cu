@@ -18,7 +18,7 @@ OctreeBuilderCuda::OctreeBuilderCuda(const TreeConfig& config)
 
 void OctreeBuilderCuda::Initialize(const int capacity)
 {
-    std::cout << "Initialize()" << std::endl;
+    std::cout << "Initialize() capacity: " << capacity << std::endl;
     auto satrtTime = std::chrono::high_resolution_clock::now();
     
     cudaMalloc((void**)&pointsExch, capacity * sizeof(float3));
@@ -39,10 +39,8 @@ void OctreeBuilderCuda::Build(float3* points, const int size)
     Reset();
 
     tree->id = 0;
-    tree->bounds.min = {0.0f, 0.0f, 0.0f};
-    tree->bounds.max = {static_cast<float>(config.size.x), 
-                        static_cast<float>(config.size.y), 
-                        static_cast<float>(config.size.z)};
+    tree->bounds.min = config.origin;
+    tree->bounds.max = config.origin + config.size;
     tree->startId = 0;
     tree->endId = size;
 
@@ -102,8 +100,8 @@ void OctreeBuilderCuda::Reset()
     for (int i = 0; i < maxNodes; ++i)
     {
         tree[i].id = 0;
-        tree[i].bounds.min = {0.0f, 0.0f};
-        tree[i].bounds.max = {0.0f, 0.0f};
+        tree[i].bounds.min = {0.0f, 0.0f, 0.0f};
+        tree[i].bounds.max = {0.0f, 0.0f, 0.0f};
         tree[i].startId = 0;
         tree[i].endId = 0;
     }
