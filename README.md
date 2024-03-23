@@ -2,7 +2,8 @@
 
 Octree                                      | QuadTree
 :------------------------------------------:|:---------------------------------------------:
-![Octree](/assets/Octree1.png){ width=70% } | ![QuadTree](/assets/QuadTree.png){ width=70% }
+![Octree](/assets/Octree1.png) | ![QuadTree](/assets/QuadTree.png)
+![Octree](/assets/Skeleton.png) |
 
 Functionality
 * CUDA tree builder
@@ -10,6 +11,7 @@ Functionality
 * 2d, 3d visualization (controls: WSAD R F, Mouse). Additional functionality for QuadTree - click on a Tree for kNN and RadiusSearch
 * Random Points Generator
 * Configuration file
+* An obj file loader
 
 Some implementation details:
 [Medium](https://medium.com/@fatlip/cuda-quadtree-octree-72e65216866c)
@@ -43,10 +45,9 @@ Some implementation details:
 #### Further development
 1. CUDA based kNN, Radius Search
 2. Refactoring, CPU, GPU optimization
-3. PointCloud loader
-4. OpenGL interop for faster visualization
-5. Raycasting
-6. KDTree
+3. OpenGL interop for faster visualization
+4. Raycasting
+5. KDTree
 
 ---
 
