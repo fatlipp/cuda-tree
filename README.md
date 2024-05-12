@@ -17,10 +17,17 @@ Some implementation details:
 [Medium](https://medium.com/@fatlip/cuda-quadtree-octree-72e65216866c)
 
 ---
-
-#### Usage
-* `./cuda_tree_app ./app/config/AppConfig.json`
-* memory check: `compute-sanitizer --tool memcheck  ./cuda_tree_app ./app/config/AppConfig.json`
+#### Build and Run
+```
+* mkdir build && cd build
+* cmake .. `[-DCUDA_ARCH=SET_YOUR_ARCH]`
+* make -j8
+* `./cuda_tree_app_TYPE ./app/config/AppConfig.json`
+* memory check: `compute-sanitizer --tool memcheck  ./cuda_tree_app_TYPE ./app/config/AppConfig.json`
+```
+* cuda_tree_app_TYPE:
+    * cuda_tree_app_rng - to use random points
+    * cuda_tree_app_obj - to read .obj file from `model_path` (only vertices)
 
 #### Config
 - `AppConfig.json` - contains general information (points count, pathes to Tree and Render config files)
@@ -34,7 +41,7 @@ Some implementation details:
 * CUDA 11.8+
 * C++ 17+
 * OpenGL, GLFW
-* nlohmann (included)
+* nlohmann, tinyobjloader (included)
 
 
 #### Limitations
@@ -52,5 +59,5 @@ Some implementation details:
 ---
 
 #### Disclaimer
-* Tested on Linux: Ubuntu 20.02, CUDA: 12.2, GPU: 3060 (laptop)
+* Tested on Linux: Ubuntu 22.02, CUDA: 12.2, GPU: 3060 (laptop)
 * Approach based on Nvidia's QuadTree sample (cdpQuadtree)

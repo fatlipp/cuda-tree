@@ -25,7 +25,7 @@ target_link_libraries(${PROJ_NAME}
         cuda_tree_render
 )
 set_target_properties(${PROJ_NAME} PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
-set_target_properties(${PROJ_NAME} PROPERTIES CUDA_ARCHITECTURES "86;90")
+set_target_properties(${PROJ_NAME} PROPERTIES CUDA_ARCHITECTURES ${CUDA_ARCH})
 
 # OBJ
 set(PROJ_NAME "cuda_tree_app_obj")
@@ -49,4 +49,4 @@ target_link_libraries(${PROJ_NAME}
         cuda_tree_render
 )
 set_target_properties(${PROJ_NAME} PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
-set_target_properties(${PROJ_NAME} PROPERTIES CUDA_ARCHITECTURES "86;90")
+set_target_properties(${PROJ_NAME} PROPERTIES CUDA_ARCHITECTURES ${CUDA_ARCH})
